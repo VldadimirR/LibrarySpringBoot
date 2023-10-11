@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+</head>
+<body>
+
+<div th:each="book : ${books}">
+  <a th:href="@{/books/{id}(id=${book.getId()})}"
+     th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+
+</div>
+
+  <form action="/books" method="get">
+    <label for="sort">Сортировать по:</label>
+    <select id="sort" name="sort">
+      <option value="year" selected>Году</option>
+      <option value="name">Названию</option>
+      <option value="author">Автору</option>
+    </select>
+    <button type="submit">Применить</button>
+  </form>
+
+<br/>
+<hr/>
+
+<div class="pagination">
+  <ul>
+    <li th:if="${currentPage > 1}">
+      <a th:href="@{|/books?page=1|}">&lt; первая</a>
+    </li>
+    <li th:if="${currentPage > 1}">
+      <a th:href="@{|/books?page=${currentPage - 1}|}">предыдущая</a>
+    </li>
+    <li th:each="pageItem : ${#numbers.sequence(1, totalPages)}">
+      <a th:href="@{|/books?page=${pageItem}|}" th:text="${pageItem}" th:class="${pageItem == currentPage} ? 'active'"></a>
+    </li>
+    <li th:if="${currentPage < totalPages}">
+      <a th:href="@{|/books?page=${currentPage + 1}|}">следующая</a>
+    </li>
+    <li th:if="${currentPage < totalPages}">
+      <a th:href="@{|/books?page=${totalPages}|}">последняя &gt;</a>
+    </li>
+  </ul>
+</div>
+
+<br/>
+
+<button><a href="/books/new">Добавить книгу</a></button>
+<button><a href="/people">Список читателей</a></button>
+<button><a href="/books/search">Поиск кнгиги</a></button>
+
+</body>
+</html>

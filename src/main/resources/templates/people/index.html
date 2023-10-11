@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}"
+       th:text="${person.getFIO() + ', ' + person.getAge()}">user</a>
+</div>
+
+<br/>
+<hr/>
+
+<button><a href="/people/new">Добавить человека</a></button>
+<button><a href="/books">Перейти в библиотеку</a></button>
+
+
+
+</body>
+</html>
