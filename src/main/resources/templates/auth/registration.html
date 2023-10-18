@@ -1,34 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Registration</title>
+  <link rel="stylesheet" type="text/css" href="/css/auth/registr_style.css" />
 </head>
 <body>
+<div class="background-image"></div>
+<div class="login-box">
+  <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="2em"
+          width="2em"
+          viewBox="0 0 448 512"
+  >
+    <path
+            d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+    />
+  </svg>
+  <h2>Регистрация</h2>
 
-<form th:method="POST" th:action="@{/auth/registration}" th:object="${person}">
-  <label for="FIO">Введите имя пользователя: </label>
-  <input type="text" th:field="*{FIO}" id="FIO"/>
-  <div style="color:red" th:if="${#fields.hasErrors('FIO')}" th:errors="*{FIO}">Username Error</div>
-  <br/>
-  <label for="age">Введите год рождения: </label>
-  <input type="text" th:field="*{age}" id="age"/>
-  <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Year of birth Error
-  </div>
-  <br/>
-  <label for="login">Введите логин: </label>
-  <input type="text" th:field="*{login}" id="login"/>
-  <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Year of birth Error
-  </div>
-  <br/>
-  <label for="password">Введите пароль: </label>
-  <input type="password" th:field="*{password}" id="password"/>
-  <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-  <br/>
-  <input type="submit" value="Зарегистрироваться!"/>
-</form>
+  <form
+          th:method="POST"
+          th:action="@{/auth/registration}"
+          th:object="${person}"
+  >
+    <div class="textbox">
+      <i class="fa fa-user"></i>
+      <input
+              type="text"
+              th:field="*{FIO}"
+              id="FIO"
+              placeholder="Enter Username"
+      />
+    </div>
+    <div
+            class="error"
+            th:if="${#fields.hasErrors('FIO')}"
+            th:errors="*{FIO}"
+    >
+      Username Error
+    </div>
 
-<a href="/auth/login"><input type="button" value="Back to Login"></a>
+    <div class="textbox">
+      <i class="fa fa-calendar"></i>
+      <input
+              type="text"
+              th:field="*{age}"
+              id="age"
+              placeholder="Enter Year of Birth"
+      />
+    </div>
+    <div
+            class="error"
+            th:if="${#fields.hasErrors('age')}"
+            th:errors="*{age}"
+    >
+      Year of Birth Error
+    </div>
 
+    <div class="textbox">
+      <i class="fa fa-user-circle"></i>
+      <input
+              type="text"
+              th:field="*{login}"
+              id="login"
+              placeholder="Enter Login"
+      />
+    </div>
+    <div
+            class="error"
+            th:if="${#fields.hasErrors('login')}"
+            th:errors="*{login}"
+    >
+      Login Error
+    </div>
+
+    <div class="textbox">
+      <i class="fa fa-lock"></i>
+      <input
+              type="password"
+              th:field="*{password}"
+              id="password"
+              placeholder="Enter Password"
+      />
+    </div>
+    <div
+            class="error"
+            th:if="${#fields.hasErrors('password')}"
+            th:errors="*{password}"
+    >
+      Password Error
+    </div>
+
+    <button type="submit" class="btn">Зарегистрировать</button>
+  </form>
+
+  <a href="/auth/login">Назад к авторизации</a>
+</div>
 </body>
 </html>

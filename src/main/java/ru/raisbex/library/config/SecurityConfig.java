@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // конфигурируем авторизацию
         http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll() // Эти страницы доступны всем
+                .antMatchers("/img/**","/css/**", "/js/**","/auth/login", "/auth/registration", "/error").permitAll() // Эти страницы доступны всем
                 .antMatchers("/people","/books/edit", "/books/new", "/people/edit", "/people/new", "/people/index", "/people/show").hasRole("ADMIN") // Роль ADMIN имеет доступ ко всем страницам, начинающимся с "/books/edit", "/books/new", и т.д.
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()

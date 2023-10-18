@@ -3,18 +3,17 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .background-image {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("/img/login_photo.jpg");
+    background-image: url("/img/registr_photo.jpg");
     background-size: cover;
-    filter: brightness(
-            0.6
-    ); /* Применение затемнения (значение 0.6 можно изменить) */
-    z-index: -1; /* Помещение фонового изображения за всеми остальными элементами */
+    filter: brightness(0.6);
+    z-index: -1;
 }
 
 .login-box {
@@ -26,8 +25,9 @@ body {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.75);
     margin: 0 auto;
     margin-top: 20vh;
-    position: relative; /* Необходимо для корректного отображения переднего плана */
+    position: relative;
 }
+
 .login-box img {
     width: 100px;
     border-radius: 50%;
@@ -55,7 +55,7 @@ body {
 
 .textbox input {
     width: 100%;
-    padding: 10px 10px; /* Изменили padding с 10px 30px на 10px 10px */
+    padding: 10px;
     border: none;
     background: #f2f2f2;
     border-radius: 5px;
@@ -63,8 +63,8 @@ body {
 }
 
 .btn {
-    background: #000; /* Цвет кнопки черный */
-    color: #fff; /* Цвет текста белый */
+    background: #000;
+    color: #fff;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -72,17 +72,15 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s;
-    margin-bottom: 10px; /* Увеличиваем отступ снизу */
+    margin-bottom: 10px;
+}
+
+.btn:hover {
+    background: #333;
 }
 
 a {
     text-decoration: none;
-    color: #999; /* Цвет текста ссылки серый */
-    font-size: 14px;
-}
-
-a {
-    text-decoration: none;
-    color: #777; /* Серый цвет для ссылки */
+    color: #777;
     font-size: 14px;
 }
