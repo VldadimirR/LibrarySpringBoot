@@ -1,9 +1,10 @@
 package ru.raisbex.library.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 import java.util.List;
 
@@ -23,6 +24,15 @@ public class Person {
     @Min(value = 1900, message = "Age should be greater than 1900")
     @Column(name = "age")
     private int age; // Возраст пользователя.
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books; // Список книг, которые принадлежат данному пользователю.
@@ -68,5 +78,27 @@ public class Person {
         this.books = books;
     }
 
+    public String getLogin() {
+        return login;
+    }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

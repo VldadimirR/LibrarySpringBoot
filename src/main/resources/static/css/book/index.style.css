@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("http://localhost:8080/img/book_index.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #333; /* Темный фон */
+}
+
+.head {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+header {
+    background-color: #222; /* Change the background color to a greenish color */
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: #888; /* Change the color on hover to a darker green */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+}
+
+.container form {
+    margin-bottom: 20px;
+}
+
+.container .books-list {
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.container .book-item {
+    margin: 10px 0;
+}
+
+.container .book-item a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.container .book-item a:hover {
+    background-color: #e6e6e6;
+}
+
+.container .book-details {
+    flex: 1;
+    padding: 10px;
+}
+
+.container .book-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.container .book-author {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.container .book-year {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.container .pagination ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.container .apply-button {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container .apply-button:hover {
+    background-color: #000;
+}
+
+.container .pagination li {
+    margin: 0 5px;
+}
+
+.container .pagination a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #555; /* Change the background color to green */
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.container .pagination a:hover {
+    background-color: #000; /* Change the background color on hover to a darker green */
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}

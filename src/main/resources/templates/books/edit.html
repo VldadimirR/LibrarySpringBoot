@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Update book</title>
+  <link rel="stylesheet" href="/css/book/edit_style.css">
 </head>
 <body>
+<header>
+  <div class="container head">
+    <a href="/books">Список книг</a>
+    <a href="/people">Список читателей</a>
+    <a href="/books/search">Поиск книги</a>
+  </div>
+</header>
 
-<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
-  <label for="name">Введите название книги: </label>
-  <input type="text" th:field="*{name}" id="name"/>
-  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">nameBook Error</div>
-  <br/>
-  <label for="author">Введите автора: </label>
-  <input type="text" th:field="*{author}" id="author"/>
-  <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
-  <br/>
-  <label for="year">Введите год: </label>
-  <input type="text" th:field="*{year}" id="year"/>
-  <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
-  <br/>
-  <input type="submit" value="Редактировать!"/>
-</form>
+<div class="container">
+  <form
+          th:method="PATCH"
+          th:action="@{/books/{id}(id=${book.getId})}"
+          th:object="${book}"
+          class="book-form"
+  >
+    <div class="form-group">
+      <label for="name" class="form-label">Введите название книги:</label>
+      <input
+              type="text"
+              th:field="*{name}"
+              id="name"
+              class="form-control"
+      />
+      <div
+              class="error"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"
+      >
+        Name Error
+      </div>
+    </div>
 
+    <div class="form-group">
+      <label for="author" class="form-label">Введите автора:</label>
+      <input
+              type="text"
+              th:field="*{author}"
+              id="author"
+              class="form-control"
+      />
+      <div
+              class="error"
+              th:if="${#fields.hasErrors('author')}"
+              th:errors="*{author}"
+      >
+        Author Error
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="year" class="form-label">Введите год:</label>
+      <input
+              type="text"
+              th:field="*{year}"
+              id="year"
+              class="form-control"
+      />
+      <div
+              class="error"
+              th:if="${#fields.hasErrors('year')}"
+              th:errors="*{year}"
+      >
+        Year Error
+      </div>
+    </div>
+
+    <div class="button-container">
+      <input type="submit" value="Редактировать!" class="submit-button" />
+    </div>
+  </form>
+</div>
+
+<footer>&copy; 2023 Все права защищены </footer>
 </body>
 </html>

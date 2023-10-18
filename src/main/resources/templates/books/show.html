@@ -1,45 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Show</title>
+  <meta charset="UTF-8" />
+  <title>Название</title>
+  <link rel="stylesheet" href="/css/book/show.style.css">
 </head>
 <body>
-<p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">VALUE</p>
+<header>
+  <div class="container head">
+    <a href="/books">Список книг</a>
+    <div th:if="${isAdmin}">
+      <a href="/people">Список читателей</a>
+    </div>
+    <a href="/books/search">Поиск книги</a>
+  </div>
+</header>
 
-<div th:if="${owner}">
-  <span>Книга сейчас у:</span><span th:text="${owner.getFIO()}">Person Name</span>
+<div class="container">
+  <div class="book-details">
+    <img
+            src="http://localhost:8080/img/book.jpg"
+            alt="Фото книги"
+            class="book-image"
+    />
+    <p style="font-weight: bold;">
+      <span th:text="${book.getName()}"></span><br/>
+      <span th:text="${book.getAuthor()}"></span><br/>
+      <span th:text="${book.getYear()}"></span>
+    </p>
 
-  <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
-    <input type="submit" value="Освободить книгу"/>
-  </form>
+    <div th:if="${owner}">
+      <p>Книга сейчас у: <span th:text="${owner.getFIO()}" style="text-decoration: underline;"></span></p>
+      <form
+              th:method="PATCH"
+              th:action="@{/books/{id}/release(id=${book.getId()})}"
+      >
+        <div class="button-container" >
+          <input
+                  type="submit"
+                  value="Освободить книгу"
+                  class="btn-primary"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div th:if="${people}">
+      <p style="text-decoration: underline;">Эта книга свободна</p>
+      <div th:if="${isAdmin}">
+        <!-- Форма для назначения книги доступна только для администраторов -->
+        <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+          <div class="form-group">
+            <label for="person">Выберите человека</label>
+            <select th:object="${person}" th:field="*{id}" id="person">
+              <option
+                      th:each="person : ${people}"
+                      th:value="${person.getId()}"
+                      th:text="${person.getFIO()}"
+              ></option>
+            </select>
+          </div>
+          <div class="button-container">
+            <input
+                    type="submit"
+                    value="Назначить книгу"
+                    class="btn-success"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="button-container">
+      <form th:method="GET" th:action="@{/books}">
+        <input type="submit" value="Назад" />
+      </form>
+
+      <!-- Показать кнопку "Редактировать" только для администраторов -->
+      <th:block th:if="${isAdmin}">
+        <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+          <input type="submit" value="Редактировать" />
+        </form>
+        <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+          <input type="submit" value="Удалить" />
+        </form>
+      </th:block>
+    </div>
+  </div>
 </div>
 
-<div th:if="${people}">
-  <span>Эта книга свободна. Кому назначить ее</span>
-  <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
-    <label for="person">Выберите человека</label>
-    <select th:object="${person}" th:field="*{id}" id="person">
-      <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFIO()}">
-      </option>
-    </select>
-    <input type="submit" value="Назначить книгу"/>
-  </form>
-</div>
-
-<hr/>
-
-<form th:method="GET" th:action="@{/books}">
-  <input type="submit" value="Назад">
-</form>
-
-<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
-  <input type="submit" value="Редактировать"/>
-</form>
-
-<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
-  <input type="submit" value="Удалить"/>
-</form>
-
+<footer>&copy; 2023 Все права защищены</footer>
 </body>
 </html>
+

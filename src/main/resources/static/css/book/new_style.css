@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("http://localhost:8080/img/book_new.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #333; /* Темный фон */
+}
+
+.head {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+header {
+    background-color: #222;
+    padding: 10px;
+    text-align: left;
+}
+
+header a {
+    color: #fff; /* Change the text color to white */
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+header a:hover {
+    color: #888; /* Серый цвет при наведении на ссылку в хедере */
+}
+
+.container {
+    max-width: 1200px; /* Increase container width to 1200px */
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1; /* Allow the container to take the remaining vertical space */
+    text-align: center; /* Center the content horizontally */
+}
+
+.book-form {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.form-label {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px; /* Add margin to the top of the input fields */
+    padding: 5px; /* Add padding to the input fields */
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="submit"] {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #000; /* Change the background color on hover to a darker green */
+}
+
+.error {
+    color: red;
+}
+
+.submit-button {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #197b30;
+}
+
+.button-container {
+    text-align: center;
+}
+
+footer {
+    background-color: #333; /* Change footer background color to dark gray */
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}

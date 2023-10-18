@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("http://localhost:8080/img/book_show.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #333; /* Темный фон */
+}
+
+.book-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Чтобы изображение было по центру */
+}
+
+.head {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+header {
+    background-color: #222;
+    padding: 10px;
+    text-align: left;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: #888; /* Серый цвет при наведении на ссылку в хедере */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+}
+
+.book-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button-container form {
+    display: inline-block;
+    margin: 10px;
+}
+
+.button-container form input[type="submit"] {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-container form input[type="submit"]:hover {
+    background-color: #000;
+}
+
+.btn-primary {
+    background-color: #555; /* Очень черный цвет при наведении */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #000; /* Darker blue color on hover */
+}
+
+.btn-success {
+    background-color: #555; /* Green color for success button */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #000; /* Darker green color on hover */
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+footer {
+    background-color: #222; /* Change footer background color to dark gray */
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}

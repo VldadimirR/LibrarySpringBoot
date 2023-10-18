@@ -12,6 +12,11 @@ import ru.raisbex.library.repositpries.BookRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional(readOnly = true)
@@ -92,6 +97,12 @@ public class BookService {
         // Метод для поиска книг по начальным символам названия.
         // titlePrefix - строка, задающая начальные символы названия книги.
         return bookRepository.findByNameStartingWith(titlePrefix);
+    }
+
+    public Set<String> getUserRoles(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
     }
 }
 

@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Index</title>
+    <meta charset="UTF-8" />
+    <title>Читатели</title>
+    <link rel="stylesheet" href="/css/people/index_style.css">
 </head>
 <body>
+<header>
+    <div class="head container">
+        <a href="/people/new">Добавить человека</a>
+        <a href="/books">Перейти в библиотеку</a>
+    </div>
+</header>
 
-<div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${person.getId()})}"
-       th:text="${person.getFIO() + ', ' + person.getAge()}">user</a>
+<div class="container">
+    <div th:each="person : ${people}">
+        <a class="person-link" th:href="@{/people/{id}(id=${person.getId()})}">
+            <span th:text="${person.getFIO() + ', ' + person.getAge()}"></span>
+        </a>
+    </div>
 </div>
 
-<br/>
-<hr/>
-
-<button><a href="/people/new">Добавить человека</a></button>
-<button><a href="/books">Перейти в библиотеку</a></button>
-
-
-
+<footer>&copy; 2023 Your Website Name</footer>
 </body>
 </html>

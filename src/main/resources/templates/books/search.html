@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Search book</title>
-
+    <link rel="stylesheet" href="/css/book/search_style.css">
 </head>
 <body>
-
-<form th:method="POST" th:action="@{/books/search}">
-    <label for="query">Введите поисковой запрос: </label>
-    <input type="text" id="query" name="query"/>
-    <br/>
-    <input type="submit" value="Искать">
-    <button><a href="/books">Вернутсья к списку книг</a></button>
-</form>
-
-<div th:if="${books}">
-    <div th:if="${books.isEmpty()}">
-        <span>Книг не найдено</span>
+<header>
+    <div class="container head">
+        <a href="/books">Список книг</a>
+        <th:block th:if="${isAdmin}">
+            <a href="/people">Список читателей</a>
+            <a href="/books/new">Добавить книгу</a>
+        </th:block>
     </div>
+</header>
 
-    <div th:each="book : ${books}">
-        <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</p>
+<div class="container">
+    <form th:method="POST" th:action="@{/books/search}" class="book-form">
+        <div class="form-group">
+            <label for="query">Введите поисковой запрос:</label>
+            <input type="text" id="query" name="query" />
+        </div>
+        <input type="submit" value="Искать" class="btn-primary" />
+    </form>
 
-        <div th:if="${book.getOwner() != null}">
-            <span>Книга сейчас у: </span> <span th:text="${book.getOwner().getFIO()}">Person Name</span>
+    <div th:if="${books}" class="book-result">
+        <div th:if="${books.isEmpty()}">
+            <span class="error-message">Книг не найдено</span>
         </div>
 
-        <div th:if="${book.getOwner() == null}">
-            <span>Книга свободна</span>
-        </div>
+        <div th:each="book : ${books}" class="book-item">
+            <p
+                    class="book-info"
+                    th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
+            ></p>
 
-        <hr/>
+            <div th:if="${book.getOwner() != null}" class="owner-info">
+                <span>Книга сейчас у: </span>
+                <span th:text="${book.getOwner().getFIO()}">Person Name</span>
+            </div>
+
+            <div th:if="${book.getOwner() == null}" class="book-available">
+                <span class="underline-text">Книга свободна</span>
+            </div>
+
+            <hr />
+        </div>
     </div>
 </div>
 
+<footer>&copy; 2023 Все права защищены</footer>
 </body>
 </html>

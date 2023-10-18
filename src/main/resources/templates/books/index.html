@@ -1,55 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Index</title>
+  <meta charset="UTF-8" />
+  <title>Список книг</title>
+  <link rel="stylesheet" href="/css/book/index.style.css">
 </head>
 <body>
+<header>
+  <div class="container head">
+    <a href="/books/new" th:if="${#strings.contains(userRoles, 'ADMIN')}">Добавить книгу</a>
+    <a href="/people" th:if="${#strings.contains(userRoles, 'ADMIN')}">Список читателей</a>
 
-<div th:each="book : ${books}">
-  <a th:href="@{/books/{id}(id=${book.getId()})}"
-     th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+    <a href="/books/search">Поиск книги</a>
+  </div>
+</header>
 
+<div class="container">
+  <section class="books-list">
+    <form action="/books" method="get">
+      <label for="sort">Сортировать по:</label>
+      <select id="sort" name="sort">
+        <option value="year" selected>Году</option>
+        <option value="name">Названию</option>
+        <option value="author">Автору</option>
+      </select>
+      <button type="submit" class="apply-button">Применить</button>
+    </form>
+    <div th:each="book : ${books}" class="book-item">
+      <a th:href="@{/books/{id}(id=${book.getId()})}">
+        <div class="book-details">
+          <div class="book-title" th:text="${book.getName()}"></div>
+          <div class="book-author" th:text="${book.getAuthor()}"></div>
+          <div class="book-year" th:text="${book.getYear()}"></div>
+        </div>
+      </a>
+    </div>
+
+    <br />
+    <hr />
+
+    <div class="pagination">
+      <ul>
+        <li th:if="${currentPage > 1}">
+          <a th:href="@{|/books?page=1|}">&lt; первая</a>
+        </li>
+        <li th:if="${currentPage > 1}">
+          <a th:href="@{|/books?page=${currentPage - 1}|}">предыдущая</a>
+        </li>
+        <li th:each="pageItem : ${#numbers.sequence(1, totalPages)}">
+          <a
+                  th:href="@{|/books?page=${pageItem}|}"
+                  th:text="${pageItem}"
+                  th:class="${pageItem == currentPage} ? 'active'"
+          ></a>
+        </li>
+        <li th:if="${currentPage < totalPages}">
+          <a th:href="@{|/books?page=${currentPage + 1}|}">следующая</a>
+        </li>
+        <li th:if="${currentPage < totalPages}">
+          <a th:href="@{|/books?page=${totalPages}|}">последняя &gt;</a>
+        </li>
+      </ul>
+    </div>
+  </section>
 </div>
 
-  <form action="/books" method="get">
-    <label for="sort">Сортировать по:</label>
-    <select id="sort" name="sort">
-      <option value="year" selected>Году</option>
-      <option value="name">Названию</option>
-      <option value="author">Автору</option>
-    </select>
-    <button type="submit">Применить</button>
-  </form>
-
-<br/>
-<hr/>
-
-<div class="pagination">
-  <ul>
-    <li th:if="${currentPage > 1}">
-      <a th:href="@{|/books?page=1|}">&lt; первая</a>
-    </li>
-    <li th:if="${currentPage > 1}">
-      <a th:href="@{|/books?page=${currentPage - 1}|}">предыдущая</a>
-    </li>
-    <li th:each="pageItem : ${#numbers.sequence(1, totalPages)}">
-      <a th:href="@{|/books?page=${pageItem}|}" th:text="${pageItem}" th:class="${pageItem == currentPage} ? 'active'"></a>
-    </li>
-    <li th:if="${currentPage < totalPages}">
-      <a th:href="@{|/books?page=${currentPage + 1}|}">следующая</a>
-    </li>
-    <li th:if="${currentPage < totalPages}">
-      <a th:href="@{|/books?page=${totalPages}|}">последняя &gt;</a>
-    </li>
-  </ul>
-</div>
-
-<br/>
-
-<button><a href="/books/new">Добавить книгу</a></button>
-<button><a href="/people">Список читателей</a></button>
-<button><a href="/books/search">Поиск кнгиги</a></button>
-
+<footer>&copy; 2023 Все права защищены</footer>
 </body>
 </html>

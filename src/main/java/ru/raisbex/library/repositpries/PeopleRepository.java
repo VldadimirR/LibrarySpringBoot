@@ -16,4 +16,6 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
     // Метод для поиска пользователя по полному имени (FIO).
     // Позволяет выполнить поиск пользователя по заданному полному имени FIO и возвращает результат в Optional,
     // так как пользователь может быть не найден.
+
+    Optional<Person> findByLogin(String username);
 }

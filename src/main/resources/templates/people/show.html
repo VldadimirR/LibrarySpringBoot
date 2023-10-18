@@ -1,45 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Show</title>
+    <meta charset="UTF-8" />
+    <title>Страница человека</title>
+    <link rel="stylesheet" href="/css/people/show_style.css">
 </head>
 <body>
-<p th:text="${person.getFIO() + ', ' + person.getAge()}">VALUE</p>
+<header>
+    <div class="head container">
+        <a href="/people/new">Добавить человека</a>
+        <a href="/books">Перейти в библиотеку</a>
+    </div>
+</header>
 
-<div th:if="${books.isEmpty()}">
-    <p>Человек пока не взял ни одной книги</p>
-    <hr/>
+<div class="card">
+    <img
+            src="http://localhost:8080/img/people-img.jpg"
+            alt="Person Photo"
+            class="person-photo"
+    />
+    <p
+            th:text="${person.getFIO() + ', ' + person.getAge()}"
+            class="book-details"
+    >
+        VALUE
+    </p>
+
+    <div th:if="${books.isEmpty()}">
+        <p
+                class="book-details"
+                style="
+            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+            text-decoration: underline;
+          "
+        >
+            Человек пока не взял ни одной книги
+        </p>
+        <hr />
+    </div>
+
+    <div th:if="${!books.isEmpty()}">
+        <hr />
+        <b style="font-weight: bold; text-align: center">Книги:</b>
+        <br />
+        <table th:each="book : ${books}">
+            <tr>
+                <td>
+              <span
+                      th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
+                      th:style="${book.isExpired()} ? 'color: red' : 'color: black'"
+                      class="book-details"
+              >
+                book
+              </span>
+                </td>
+            </tr>
+        </table>
+        <hr />
+    </div>
 </div>
 
-<div th:if="${!books.isEmpty()}">
-    <hr/>
-    <b>Книги:</b>
-    <br/>
-    <table th:each="book : ${books}">
-        <tr>
-            <td>
-    <span th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
-          th:style="${book.isExpired()} ? 'color: red' : 'color: black'">
-      book
-      </span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
+<div class="button-container">
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+
+    <form th:method="GET" th:action="@{/people}">
+        <input type="submit" value="Назад" class="btn-primary" />
+    </form>
+
+    <form
+            th:method="GET"
+            th:action="@{/people/{id}/edit(id=${person.getId()})}"
+    >
+        <input type="submit" value="Изменить" class="btn-success" />
+    </form>
+
+    <form
+            th:method="DELETE"
+            th:action="@{/people/{id}(id=${person.getId()})}"
+    >
+        <input type="submit" value="Удалить" class="btn-primary" />
+    </form>
 </div>
 
-
-<form th:method="GET" th:action="@{/people}">
-    <input type="submit" value="Назад">
-</form>
-
-<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-    <input type="submit" value="Изменить"/>
-</form>
-
-<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-    <input type="submit" value="Удалить"/>
-</form>
+<footer>Copyright © 2023</footer>
 </body>
 </html>

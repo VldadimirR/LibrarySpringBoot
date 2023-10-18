@@ -1,6 +1,6 @@
 package ru.raisbex.library.controllers;
 
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,8 @@ import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.services.PeopleService;
 import ru.raisbex.library.util.PersonValidator;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller

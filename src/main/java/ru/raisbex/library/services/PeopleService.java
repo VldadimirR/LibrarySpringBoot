@@ -2,12 +2,16 @@ package ru.raisbex.library.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.repositpries.PeopleRepository;
+import ru.raisbex.library.security.PersonDetails;
 
 import java.util.Collections;
 import java.util.Date;
@@ -16,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class PeopleService {
+public class PeopleService implements UserDetailsService {
     private final int DELAY_PERIOD = 864_000_000; // Период задержки в миллисекундах (10 дней).
     private final PeopleRepository peopleRepository;
 
@@ -91,4 +95,17 @@ public class PeopleService {
             book.setExpired(true);
         }
     }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        Optional<Person> person = peopleRepository.findByLogin(s);
+
+        if (person.isEmpty())
+            throw new UsernameNotFoundException("User not found");
+
+        return new PersonDetails(person.get());
+    }
+
+
 }

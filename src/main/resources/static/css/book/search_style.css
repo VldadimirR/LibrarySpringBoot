@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("http://localhost:8080/img/book_search.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #333; /* Темный фон */
+}
+
+.head {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+header {
+    background-color: #222; /* Темно-серый цвет для заголовка */
+    padding: 10px;
+    text-align: left;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: #888; /* Серый цвет при наведении на ссылку в хедере */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+}
+
+.book-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px; /* Отступ снизу */
+    box-sizing: border-box; /* Учесть границу внутри ширины элемента */
+}
+
+input[type="submit"] {
+    background-color: #555; /* Темный цвет для кнопки "Искать" */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #000; /* Очень черный цвет при наведении */
+}
+
+a.button-link {
+    text-decoration: none;
+    color: #fff;
+}
+
+.book-result {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.owner-info {
+    margin-top: 5px;
+}
+
+.book-available {
+    font-style: italic;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.underline-text {
+    text-decoration: underline;
+}
+
+.owner-info span {
+    color: #555;
+    font-weight: bold; /* Жирный шрифт */
+    /* Другие свойства стиля, если необходимо */
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}

@@ -1,8 +1,10 @@
 package ru.raisbex.library.controllers;
 
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,9 @@ import ru.raisbex.library.models.Person;
 import ru.raisbex.library.services.BookService;
 import ru.raisbex.library.services.PeopleService;
 
+import javax.validation.Valid;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/books")
@@ -30,7 +34,7 @@ public class BookController {
     @GetMapping()
     public String indexBook(Model model,
                             @RequestParam(defaultValue = "1", required = false) int page,
-                            @RequestParam(defaultValue = "3", required = false) int perPage,
+                            @RequestParam(defaultValue = "6", required = false) int perPage,
                             @RequestParam(defaultValue = "year") String sort) {
         // Получение списка книг с учетом параметров страницы, количества на странице и сортировки
         Page<Book> bookPage = bookService.index(page - 1, perPage, sort);
@@ -39,6 +43,10 @@ public class BookController {
         model.addAttribute("books", bookPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookPage.getTotalPages());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> userRoles = bookService.getUserRoles(authentication);
+        model.addAttribute("userRoles", userRoles);
 
         // Возвращает имя шаблона представления для отображения списка книг
         return "books/index";
@@ -55,6 +63,12 @@ public class BookController {
 
         // Передача информации о книге и её владельце (если есть) в модель
         model.addAttribute("book", book);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        model.addAttribute("isAdmin", isAdmin);
 
         if (bookOwner.isPresent()) {
             model.addAttribute("owner", bookOwner.get());
@@ -149,7 +163,12 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public String search() {
+    public String search(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        model.addAttribute("isAdmin", isAdmin);
         // Этот метод отображает страницу поиска книг.
         return "books/search";
     }
