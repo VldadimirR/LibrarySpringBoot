@@ -26,7 +26,7 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.person.getLogin();
+        return this.person.getFIO();
     }
 
     @Override
@@ -53,6 +53,4 @@ public class PersonDetails implements UserDetails {
     public Person getPerson() {
         return this.person;
     }
-
-
 }

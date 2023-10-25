@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.raisbex.library.models.Person;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,4 +19,6 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
     // так как пользователь может быть не найден.
 
     Optional<Person> findByLogin(String username);
+
+    List<Person> findByRole(String role);
 }

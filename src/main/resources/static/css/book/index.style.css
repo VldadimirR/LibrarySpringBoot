@@ -11,29 +11,6 @@ body {
     background-color: #333; /* Темный фон */
 }
 
-.head {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-header {
-    background-color: #222; /* Change the background color to a greenish color */
-    color: #fff;
-    padding: 10px;
-    text-align: left;
-}
-
-header a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    transition: color 0.3s;
-}
-
-header a:hover {
-    color: #888; /* Change the color on hover to a darker green */
-}
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -120,7 +97,7 @@ header a:hover {
 .container .pagination a {
     display: inline-block;
     padding: 5px 10px;
-    background-color: #555; /* Change the background color to green */
+    background-color: #555;
     color: #fff;
     text-decoration: none;
     transition: background-color 0.3s;
@@ -128,11 +105,117 @@ header a:hover {
 }
 
 .container .pagination a:hover {
-    background-color: #000; /* Change the background color on hover to a darker green */
+    background-color: #000;
+}
+
+/* Остальные стили для выпадающего меню и кнопок */
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.icon-container:hover .dropdown-content {
+    display: block;
+}
+
+.icon-container .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.icon-container .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #222222; /* Цвет текста как у ссылки в .button */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    transition: background-color 0.3s, color 0.3s; /* Эффекты плавного изменения цвета текста и фона */
+}
+
+.logout-button:hover {
+    background-color: #f5f5f5; /* Легкая подсветка фона при наведении */
+    color: #555555; /* Изменение цвета текста при наведении */
+}
+
+.button,
+form {
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #222222;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover,
+form:hover {
+    background-color: #555555; /* Изменяем фон при наведении */
+    color: #fff;
+}
+
+form input[type="submit"] {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #222222; /* Цвет текста как у ссылки в .button */
+    text-decoration: underline; /* Подчёркивание текста */
+}
+
+form input[type="submit"]:hover {
+    background: none; /* Убираем фон при наведении */
+}
+
+header {
+    background-color: #222; /* Изменение цвета фона на зеленый */
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+header a:hover {
+    color: #888; /* Изменение цвета при наведении на более темно-зеленый */
 }
 
 footer {
-    background-color: #333;
+    background-color: #222222;
     color: #fff;
     padding: 15px;
     text-align: center;

@@ -2,6 +2,9 @@ package ru.raisbex.library.services;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,10 +16,8 @@ import ru.raisbex.library.models.Person;
 import ru.raisbex.library.repositpries.PeopleRepository;
 import ru.raisbex.library.security.PersonDetails;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -107,5 +108,52 @@ public class PeopleService implements UserDetailsService {
         return new PersonDetails(person.get());
     }
 
+    public Set<String> getUserRoles() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
+    }
+
+    public  boolean adminCheck(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private boolean adminCheck(Person person) {
+        return "ROLE_ADMIN".equals(person.getRole());
+    }
+
+    public List<Person> filterOutAdmins(List<Person> allUsers) {
+        return  allUsers.stream()
+                .filter(person -> !adminCheck(person))
+                .collect(Collectors.toList());
+    }
+
+    public Person loadAuthenticationPeople(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Person> currentUserOptional = getPersonByName(authentication.getName());
+
+        // Используйте orElse(null), чтобы предоставить Person или null, если Optional пустой
+        return currentUserOptional.orElse(null);
+    }
+    @Transactional
+    public void updateUserRole(int userId, String newRole) {
+        Optional<Person> userOptional = peopleRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Person user = userOptional.get();
+
+            // Здесь предполагается, что роли хранятся в поле "role" объекта Person
+            // Ваша логика обновления роли может быть другой, в зависимости от вашей системы ролей
+            user.setRole(newRole);
+
+            peopleRepository.save(user); // Сохраняем обновленные данные пользователя
+        }
+    }
+
+    public List<Person> getAllAdmins() {
+        return peopleRepository.findByRole("ROLE_ADMIN");
+    }
 
 }

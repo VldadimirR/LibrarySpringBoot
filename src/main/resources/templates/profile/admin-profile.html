@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Страница администратора</title>
+    <link rel="stylesheet" type="text/css" href="/css/profile/admin_profile.css" />
+</head>
+<body>
+<div class="user-info">
+    <h1>Администратор</h1>
+    <img src="http://localhost:8080/img/profile.jpg" alt="User Image" />
+    <!-- Замените "your-profile-image.jpg" на путь к изображению пользователя -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <td th:text="${person.id}">User ID</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td th:text="${person.FIO}">User Name</td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td th:text="${person.age}">User Age</td>
+        </tr>
+        <tr>
+            <th>Login</th>
+            <td th:text="${person.login}">User Login</td>
+        </tr>
+    </table>
+    <div class="button-container">
+        <a href="/books">вернуться к списку книг</a>
+        <a href="/people">вернуться к списку людей</a>
+    </div>
+</div>
+<div class="card">
+    <h2>Обновление роли пользователя:</h2>
+    <form method="post" th:action="@{/profile/updateRole}">
+        <select name="userId">
+            <option
+                    th:each="user : ${users}"
+                    th:value="${user.id}"
+                    th:text="${user.FIO}"
+            ></option>
+        </select>
+        <select name="newRole">
+            <option value="ROLE_USER">Пользователь</option>
+            <option value="ROLE_ADMIN">Администратор</option>
+        </select>
+        <button type="submit">Обновить роль</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Список администраторов:</h2>
+    <ul>
+        <li th:each="admin : ${admins}" th:text="${admin.FIO}"></li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Статистика:</h2>
+    <p>
+        Общее количество книг в базе данных:
+        <span th:text="${totalBooksCount}"></span>
+    </p>
+</div>
+</body>
+</html>

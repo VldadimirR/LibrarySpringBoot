@@ -44,8 +44,7 @@ public class BookController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookPage.getTotalPages());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Set<String> userRoles = bookService.getUserRoles(authentication);
+        Set<String> userRoles = peopleService.getUserRoles();
         model.addAttribute("userRoles", userRoles);
 
         // Возвращает имя шаблона представления для отображения списка книг
@@ -63,12 +62,7 @@ public class BookController {
 
         // Передача информации о книге и её владельце (если есть) в модель
         model.addAttribute("book", book);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("isAdmin", peopleService.adminCheck());
 
         if (bookOwner.isPresent()) {
             model.addAttribute("owner", bookOwner.get());

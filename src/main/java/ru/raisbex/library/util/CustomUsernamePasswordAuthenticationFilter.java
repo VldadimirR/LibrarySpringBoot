@@ -1,5 +1,6 @@
 package ru.raisbex.library.util;
 
+
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -20,6 +21,5 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         // Здесь вы можете настроить, как извлекать логин из запроса, например, из параметра "login".
         return request.getParameter("login");
     }
-
 
 }

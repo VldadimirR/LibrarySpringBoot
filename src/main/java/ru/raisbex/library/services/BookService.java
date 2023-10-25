@@ -99,10 +99,8 @@ public class BookService {
         return bookRepository.findByNameStartingWith(titlePrefix);
     }
 
-    public Set<String> getUserRoles(Authentication authentication) {
-        return authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
+    public long getTotalBooksCount() {
+        return bookRepository.count();
     }
 }
 

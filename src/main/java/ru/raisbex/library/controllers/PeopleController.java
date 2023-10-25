@@ -31,9 +31,10 @@ public class PeopleController {
     public String index(Model model) {
         // Получение списка всех пользователей
         List<Person> people = peopleService.index();
+        List<Person> nonAdminUsers = peopleService.filterOutAdmins(people);
 
         // Передача списка пользователей в модель для отображения
-        model.addAttribute("people", people);
+        model.addAttribute("people", nonAdminUsers);
 
         // Возвращает имя шаблона представления для отображения списка пользователей
         return "people/index";
@@ -116,6 +117,10 @@ public class PeopleController {
         // Перенаправление пользователя на список всех пользователей
         return "redirect:/people";
     }
+
+    // Метод для отображения личного кабинета пользователя.
+
+
 }
 
 
