@@ -46,11 +46,7 @@
 
 <div class="container">
   <div class="book-details">
-    <img
-            src="http://localhost:8080/img/book.jpg"
-            alt="Фото книги"
-            class="book-image"
-    />
+    <img th:src="@{/img/bookImg/{imagePath}(imagePath=${book.imagePath})}" alt="Фото книги" class="book-image" id="bookImage">
     <p style="font-weight: bold;">
       <span th:text="${book.getName()}"></span><br/>
       <span th:text="${book.getAuthor()}"></span><br/>

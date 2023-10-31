@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,22 +43,6 @@ public class PeopleService implements UserDetailsService {
         // Возвращает найденного пользователя или null, если пользователь не найден.
         Optional<Person> foundPerson = peopleRepository.findById(id);
         return foundPerson.orElse(null);
-    }
-
-    @Transactional
-    public void save(Person person) {
-        // Метод для сохранения нового пользователя в базе данных.
-        // person - объект пользователя для сохранения.
-        peopleRepository.save(person);
-    }
-
-    @Transactional
-    public void update(int id, Person personUpdate) {
-        // Метод для обновления информации о пользователе.
-        // id - ID пользователя, personUpdate - обновленная информация о пользователе.
-        // Выполняет обновление данных пользователя в базе данных.
-        personUpdate.setId(id);
-        peopleRepository.save(personUpdate);
     }
 
     @Transactional

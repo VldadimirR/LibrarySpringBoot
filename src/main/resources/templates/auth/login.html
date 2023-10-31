@@ -38,6 +38,9 @@
               placeholder="Password"
       />
     </div>
+    <div th:if="${loginError}">
+      <p style="color: red;">Вы ввели неверный логин или пароль.</p>
+    </div>
     <input type="submit" value="Войти" class="btn" />
   </form>
   <a href="/auth/registration">Нет аккаунта? Зарегистрируйтесь здесь.</a>

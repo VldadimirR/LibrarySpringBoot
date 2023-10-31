@@ -48,8 +48,14 @@
             th:action="@{/books}"
             th:object="${book}"
             class="book-form"
+            enctype="multipart/form-data"
     >
         <div class="form-group">
+            <div class="form-group-img">
+                <label for="imageFile">Загрузить изображение</label>
+                <input type="file" id="imageFile" name="imageFile" accept="image/*">
+            </div>
+
             <label for="name" class="form-label">Введите название книги:</label>
             <input
                     type="text"

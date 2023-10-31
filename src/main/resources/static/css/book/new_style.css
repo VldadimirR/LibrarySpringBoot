@@ -208,3 +208,26 @@ icon-container form:hover {
 .icon-container form input[type="submit"]:hover {
     background: none; /* Убираем фон при наведении */
 }
+
+.form-group-img {
+    text-align: center; /* Выравнивание содержимого по центру */
+    margin: 20px 0; /* Добавляем немного отступа сверху и снизу */
+    border: 1px solid #555; /* Добавляем рамку вокруг .form-group-img */
+    border-radius: 5px; /* Закругленные углы */
+    padding: 10px; /* Отступы вокруг содержимого */
+}
+
+.form-group-img label {
+    font-weight: bold; /* Увеличиваем жирность шрифта метки */
+}
+
+.form-group-img input[type="file"] {
+    display: none;
+    margin: 10px auto; /* Центрируем поле ввода по горизонтали и добавляем немного отступа сверху и снизу */
+}
+
+/* Подсветка при наведении на метку */
+.form-group-img label:hover {
+    color: #888;
+    cursor: pointer;
+}

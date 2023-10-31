@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.services.BookService;
@@ -17,6 +18,7 @@ import ru.raisbex.library.services.PeopleService;
 import javax.validation.Valid;
 import java.util.Optional;
 import java.util.Set;
+
 
 @Controller
 @RequestMapping("/books")
@@ -42,6 +44,7 @@ public class BookController {
         // Передача списка книг и информации о пагинации в модель
         model.addAttribute("books", bookPage.getContent());
         model.addAttribute("currentPage", page);
+        model.addAttribute("perPage", perPage);
         model.addAttribute("totalPages", bookPage.getTotalPages());
 
         Set<String> userRoles = peopleService.getUserRoles();
@@ -84,10 +87,15 @@ public class BookController {
 
     // Метод для обработки создания новой книги.
     @PostMapping()
-    public String createBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+    public String createBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
+         @RequestParam("imageFile") MultipartFile imageFile) {
         // Проверка наличия ошибок валидации
         if (bindingResult.hasErrors()) {
             return "books/new"; // Если есть ошибки, возвращаем форму создания с сообщениями об ошибках.
+        }
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            bookService.imgLoad(book,imageFile);
         }
 
         // Сохранение новой книги
@@ -111,13 +119,24 @@ public class BookController {
     }
 
     // Метод для обновления книги по её ID.
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String updateBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
-                             @PathVariable("id") int id) {
+                             @PathVariable("id") int id, @RequestParam("imageFile") MultipartFile imageFile,
+                             @RequestParam(value = "deleteImage", required = false) Boolean deleteImage,
+                             Model model) {
+
         // Проверка наличия ошибок валидации
         if (bindingResult.hasErrors()) {
-            return "people/edit"; // Если есть ошибки, возвращаем форму редактирования с сообщениями об ошибках.
+            return "books/edit"; // Если есть ошибки, возвращаем форму редактирования с сообщениями об ошибках.
         }
+
+        // New image file provided, save it
+        bookService.imgLoad(book, imageFile);
+
+        model.addAttribute("deleteImage", deleteImage);
+
+        // Проверка на наличие параметра deleteImage и его значения
+        bookService.delImg(deleteImage, book);
 
         // Обновление данных книги
         bookService.update(id, book);
@@ -125,6 +144,7 @@ public class BookController {
         // Перенаправление пользователя на список всех книг
         return "redirect:/books";
     }
+
 
     // Метод для удаления книги по её ID.
     @DeleteMapping("/{id}")

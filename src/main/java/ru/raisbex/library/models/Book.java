@@ -39,6 +39,9 @@ public class Book {
     @Transient // Поле не отображается в базе данных, так как является вычисляемым.
     private boolean expired; // Флаг, указывающий, просрочена ли аренда книги.
 
+    @Column(name = "image_path")
+    private String imagePath; // Путь к изображению книги
+
     public Book(){
 
     }
@@ -103,5 +106,13 @@ public class Book {
 
     public void setExpired(boolean expired) {
         this.expired = expired;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

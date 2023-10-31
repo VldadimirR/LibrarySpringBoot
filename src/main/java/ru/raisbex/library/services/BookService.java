@@ -1,27 +1,27 @@
 package ru.raisbex.library.services;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.repositpries.BookRepository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import java.util.stream.Collectors;
-
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
 public class BookService {
     private final BookRepository bookRepository;
+
+    private static final String UPLOAD_DIR = "C:\\Users\\rasal\\OneDrive\\Desktop\\library\\src\\main\\upload\\static\\img\\bookImg\\";
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -31,7 +31,6 @@ public class BookService {
         // Метод для получения страницы книг с пагинацией и сортировкой.
         // page - номер страницы, size - количество записей на странице, sortField - поле для сортировки.
         // Возвращает объект Page, содержащий список книг на указанной странице.
-
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortField));
         return bookRepository.findAll(pageable);
     }
@@ -101,6 +100,41 @@ public class BookService {
 
     public long getTotalBooksCount() {
         return bookRepository.count();
+    }
+
+    public void imgLoad(Book book, MultipartFile imageFile){
+        if (imageFile == null || imageFile.isEmpty()) {
+            // No new image file provided, so use the existing image path
+            String existingImagePath = show(book.getId()).getImagePath();
+            book.setImagePath(existingImagePath);
+        } else {
+            try {
+                String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+                Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                Files.write(filePath, imageFile.getBytes());
+
+                book.setImagePath(fileName);
+            } catch (IOException e) {
+                // Обработка ошибки
+            }
+        }
+    }
+
+    public void delImg(Boolean deleteImage, Book book){
+        if (deleteImage != null && deleteImage) {
+            String imagePath = book.getImagePath();
+            if (imagePath != null) {
+                Path imageFilePath = Paths.get(UPLOAD_DIR, imagePath);
+                try {
+                    Files.deleteIfExists(imageFilePath);
+                    book.setImagePath(null);
+                    update(book.getId(), book);
+                } catch (IOException e) {
+                    System.err.println("Error deleting image file: " + e.getMessage()); // Error logging
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
 

@@ -12,7 +12,8 @@ body {
 }
 
 .book-image {
-    max-width: 100%;
+    width: 450px;
+    max-height: 600px;
     height: auto;
     display: block;
     margin: 0 auto; /* Чтобы изображение было по центру */

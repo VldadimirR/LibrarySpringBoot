@@ -33,6 +33,10 @@ public class PersonValidator implements Validator {
 
         Person person = (Person) o;
 
+        if (peopleService.getPersonByName(person.getLogin()).isPresent()) {
+            // Проверка на уникальность логина.
+            errors.rejectValue("login", "", "Человек с таким логином уже существует");
+        }
         if (peopleService.getPersonByName(person.getFIO()).isPresent()) {
             // Проверка на уникальность имени пользователя (ФИО).
             errors.rejectValue("FIO", "", "Человек с таким ФИО уже существует");

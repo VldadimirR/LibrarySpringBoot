@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.services.PeopleService;
+import ru.raisbex.library.services.RegistrationService;
 import ru.raisbex.library.util.PersonValidator;
 
 import javax.validation.Valid;
@@ -20,10 +21,13 @@ public class PeopleController {
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
 
+    private final RegistrationService registrationService;
+
     @Autowired
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator, RegistrationService registrationService) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
+        this.registrationService = registrationService;
     }
 
     // Метод для отображения списка всех пользователей.
@@ -73,7 +77,7 @@ public class PeopleController {
         }
 
         // Сохранение нового пользователя
-        peopleService.save(person);
+        registrationService.save(person);
 
         // Перенаправление пользователя на список всех пользователей
         return "redirect:/people";
@@ -102,7 +106,7 @@ public class PeopleController {
         }
 
         // Обновление данных пользователя
-        peopleService.update(id, person);
+        registrationService.update(id, person);
 
         // Перенаправление пользователя на список всех пользователей
         return "redirect:/people";

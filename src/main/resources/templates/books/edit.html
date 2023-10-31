@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <title>Update book</title>
+  <title>Обновить книгу</title>
   <link rel="stylesheet" href="/css/book/edit_style.css">
 </head>
 <body>
@@ -48,12 +48,23 @@
 
 <div class="container">
   <form
-          th:method="PATCH"
+          th:method="POST"
           th:action="@{/books/{id}(id=${book.getId})}"
           th:object="${book}"
           class="book-form"
+          enctype="multipart/form-data"
   >
     <div class="form-group">
+      <label for="deleteImage">Удалить изображение</label>
+      <input type="checkbox" id="deleteImage" name="deleteImage" th:checked="${deleteImage}" th:disabled="${book.imagePath == null}" />
+    </div>
+
+    <div class="form-group">
+      <div class="form-group-img">
+        <label for="imageFile">Загрузить изображение</label>
+        <input type="file" id="imageFile" name="imageFile" accept="image/*">
+      </div>
+
       <label for="name" class="form-label">Введите название книги:</label>
       <input
               type="text"

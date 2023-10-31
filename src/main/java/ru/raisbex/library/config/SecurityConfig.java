@@ -11,12 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.raisbex.library.services.PeopleService;
 import ru.raisbex.library.util.CustomUsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final PeopleService personDetailsService;
 
@@ -39,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // конфигурируем авторизацию
         http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/img/**","/css/**", "/js/**","/auth/login", "/auth/registration", "/error").permitAll() // Эти страницы доступны всем
+                .antMatchers("img/bookImg","/img/**","/css/**", "/js/**","/auth/login", "/auth/registration", "/error").permitAll() // Эти страницы доступны всем
                 .antMatchers("/people","/books/edit", "/books/new", "/people/edit", "/people/new", "/people/index", "/people/show").hasRole("ADMIN") // Роль ADMIN имеет доступ ко всем страницам, начинающимся с "/books/edit", "/books/new", и т.д.
                 .antMatchers("/profile").authenticated() // Разрешить доступ к /profile только авторизованным пользователям
                 .anyRequest().hasAnyRole("USER", "ADMIN")
@@ -67,4 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/upload/**").addResourceLocations("file://" + System.getProperty("user.dir") + "/src/main/upload/");
+    }
+
 }

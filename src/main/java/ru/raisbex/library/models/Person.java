@@ -16,18 +16,22 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // Уникальный идентификатор пользователя.
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
+    @NotEmpty(message = "Имя не должно быть пустым")
+    @Size(min = 2, max = 30, message = "Имя должно содержать от 2 до 30 символов")
     @Column(name = "FIO")
     private String FIO; // Полное имя пользователя.
 
-    @Min(value = 1900, message = "Age should be greater than 1900")
+    @Min(value = 1900, message = "Возраст должен быть больше 1900 лет")
     @Column(name = "age")
     private int age; // Возраст пользователя.
 
+    @NotEmpty(message = "Login should not be empty")
+    @Size(min = 4, max = 30, message = "Login should be between 4 and 30 characters")
     @Column(name = "login")
     private String login;
 
+    @NotEmpty(message = "Password should not be empty")
+    @Size(min = 6, message = "Password should be between 6 and 30 characters")
     @Column(name = "password")
     private String password;
 

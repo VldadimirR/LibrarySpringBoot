@@ -25,4 +25,24 @@ public class RegistrationService {
         person.setRole("ROLE_USER");
         peopleRepository.save(person);
     }
+
+    @Transactional
+    public void save(Person person) {
+        // Метод для сохранения нового пользователя в базе данных.
+        // person - объект пользователя для сохранения.
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setRole("ROLE_USER");
+        peopleRepository.save(person);
+    }
+
+    @Transactional
+    public void update(int id, Person personUpdate) {
+        // Метод для обновления информации о пользователе.
+        // id - ID пользователя, personUpdate - обновленная информация о пользователе.
+        // Выполняет обновление данных пользователя в базе данных.
+        personUpdate.setId(id);
+        personUpdate.setPassword(passwordEncoder.encode(personUpdate.getPassword()));
+        personUpdate.setRole("ROLE_USER");
+        peopleRepository.save(personUpdate);
+    }
 }

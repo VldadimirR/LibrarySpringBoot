@@ -53,8 +53,9 @@
       <select id="sort" name="sort">
         <option value="year" selected>Году</option>
         <option value="name">Названию</option>
-        <option value="author">Автору</option>
       </select>
+      <input type="hidden" name="page" th:value="${currentPage}" />
+      <input type="hidden" name="perPage" th:value="${perPage}" />
       <button type="submit" class="apply-button">Применить</button>
     </form>
     <div th:each="book : ${books}" class="book-item">
