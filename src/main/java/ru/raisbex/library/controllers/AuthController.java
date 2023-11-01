@@ -28,34 +28,36 @@ public class AuthController {
         this.personValidator = personValidator;
     }
 
+    // Этот метод обрабатывает GET-запрос для отображения страницы входа.
     @GetMapping("/login")
     public String loginPage(Model model, @RequestParam(name = "error", required = false) String error) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/profile"; // Перенаправляем на страницу профиля
+            return "redirect:/profile"; // Перенаправление на страницу профиля, если пользователь уже аутентифицирован.
         }
         if (error != null) {
             model.addAttribute("loginError", true);
         }
-        return "auth/login";
+        return "auth/login"; // Возврат страницы входа.
     }
 
+    // Этот метод обрабатывает GET-запрос для отображения страницы регистрации.
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
-        return "auth/registration";
+        return "auth/registration"; // Возврат страницы регистрации.
     }
 
+    // Этот метод обрабатывает POST-запрос для обработки регистрации пользователя.
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("person") @Valid Person person,
                                       BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors())
-            return "/auth/registration";
+            return "/auth/registration"; // Возврат страницы регистрации с ошибками валидации, если они есть.
 
-        registrationService.register(person);
+        registrationService.register(person); // Регистрация пользователя.
 
-        return "redirect:/auth/login";
+        return "redirect:/auth/login"; // Перенаправление на страницу входа после успешной регистрации.
     }
-
 }

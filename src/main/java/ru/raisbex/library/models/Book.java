@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "book")
@@ -14,17 +15,17 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 50, message = "Name should be between 2 and 30 characters")
+    @NotEmpty(message = "Имя не должно быть пустым")
+    @Size(min = 2, max = 50, message = "Имя должно содержать от 2 до 30 символов")
     @Column(name = "name")
     private String name; // Название книги.
 
-    @NotEmpty(message = "Author should not be empty")
-    @Size(min = 2, max = 30, message = "Author should be between 2 and 30 characters")
+    @NotEmpty(message = "Автор не должен быть пустым")
+    @Size(min = 2, max = 30, message = "Автор должен содержать от 2 до 30 символов")
     @Column(name = "author")
     private String author; // Имя автора книги.
 
-    @Min(value = 1500, message = "Age should be greater than 0")
+    @Min(value = 1500, message = "Возраст должен быть больше 0")
     @Column(name = "year")
     private int year; // Год выпуска книги.
 
@@ -114,5 +115,28 @@ public class Book {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", year=" + year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return  year == book.year  && Objects.equals(name, book.name)
+                && Objects.equals(author, book.author) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, author, year);
     }
 }

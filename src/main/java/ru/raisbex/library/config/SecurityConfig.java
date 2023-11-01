@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.raisbex.library.services.PeopleService;
 import ru.raisbex.library.util.CustomUsernamePasswordAuthenticationFilter;
 
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
@@ -27,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         this.personDetailsService = personDetailsService;
     }
 
+    // Создание и настройка пользовательского фильтра аутентификации
     @Bean
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
         CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
@@ -34,44 +36,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         return filter;
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // конфигурируем сам Spring Security
-        // конфигурируем авторизацию
+        // Конфигурация правил безопасности
         http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("img/bookImg","/img/**","/css/**", "/js/**","/auth/login", "/auth/registration", "/error").permitAll() // Эти страницы доступны всем
-                .antMatchers("/people","/books/edit", "/books/new", "/people/edit", "/people/new", "/people/index", "/people/show").hasRole("ADMIN") // Роль ADMIN имеет доступ ко всем страницам, начинающимся с "/books/edit", "/books/new", и т.д.
-                .antMatchers("/profile").authenticated() // Разрешить доступ к /profile только авторизованным пользователям
-                .anyRequest().hasAnyRole("USER", "ADMIN")
+                .antMatchers("/img/bookImg","/img/**","/css/**", "/js/**","/auth/login", "/auth/registration", "/error").permitAll() // Доступ без аутентификации к указанным страницам и ресурсам
+                .antMatchers("/people","/books/edit", "/books/new", "/people/edit", "/people/new", "/people/index", "/people/show").hasRole("ADMIN") // Доступ для пользователей с ролью ADMIN к определенным страницам
+                .antMatchers("/profile").authenticated() // Доступ к /profile только для авторизованных пользователей
+                .anyRequest().hasAnyRole("USER", "ADMIN") // Доступ для пользователей с ролью USER и ADMIN ко всем остальным страницам
                 .and()
                 .formLogin()
-                .loginPage("/auth/login")
+                .loginPage("/auth/login") // Страница входа
                 .loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/books", true) // После успешной аутентификации перебрасывать на "/books
-                .failureUrl("/auth/login?error")
+                .defaultSuccessUrl("/books", true) // Перенаправление после успешной аутентификации
+                .failureUrl("/auth/login?error") // Перенаправление после ошибки аутентификации
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/books");
-
+                .logoutUrl("/logout") // URL для выхода
+                .logoutSuccessUrl("/books"); // Перенаправление после успешного выхода
     }
 
-
+    // Настройка аутентификации пользователей
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(personDetailsService)
                 .passwordEncoder(getPasswordEncoder());
     }
 
+    // Bean для шифрования паролей
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        // Конфигурация для обработки запросов к статическим ресурсам
         registry.addResourceHandler("/upload/**").addResourceLocations("file://" + System.getProperty("user.dir") + "/src/main/upload/");
     }
-
 }
+

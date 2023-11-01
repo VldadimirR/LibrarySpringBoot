@@ -102,39 +102,67 @@ public class BookService {
         return bookRepository.count();
     }
 
-    public void imgLoad(Book book, MultipartFile imageFile){
+    // Метод для загрузки изображения книги
+    public void imgLoad(Book book, MultipartFile imageFile) {
         if (imageFile == null || imageFile.isEmpty()) {
-            // No new image file provided, so use the existing image path
-            String existingImagePath = show(book.getId()).getImagePath();
-            book.setImagePath(existingImagePath);
+            reuseExistingImage(book);
         } else {
             try {
-                String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-                Path filePath = Paths.get(UPLOAD_DIR, fileName);
-                Files.write(filePath, imageFile.getBytes());
-
-                book.setImagePath(fileName);
+                saveNewImage(book, imageFile);
             } catch (IOException e) {
-                // Обработка ошибки
+                handleImageError(e);
             }
         }
     }
 
-    public void delImg(Boolean deleteImage, Book book){
-        if (deleteImage != null && deleteImage) {
-            String imagePath = book.getImagePath();
-            if (imagePath != null) {
+    // Метод для удаления изображения книги
+    public void delImg(Boolean deleteImage, Book book) {
+        if (shouldDeleteImage(deleteImage)) {
+            deleteImageFile(book);
+        }
+    }
+
+    // Метод для повторного использования существующего изображения
+    private void reuseExistingImage(Book book) {
+        String existingImagePath = show(book.getId()).getImagePath();
+        book.setImagePath(existingImagePath);
+    }
+
+    // Метод для сохранения нового изображения книги
+    private void saveNewImage(Book book, MultipartFile imageFile) throws IOException {
+        String fileName = generateUniqueFileName(imageFile);
+        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+        Files.write(filePath, imageFile.getBytes());
+        book.setImagePath(fileName);
+    }
+
+    // Метод для обработки ошибок изображения
+    private void handleImageError(IOException e) {
+        // Обработка ошибки
+    }
+
+    // Метод для проверки необходимости удаления изображения
+    private boolean shouldDeleteImage(Boolean deleteImage) {
+        return deleteImage != null && deleteImage;
+    }
+
+    // Метод для удаления файла изображения книги
+    private void deleteImageFile(Book book) {
+        String imagePath = book.getImagePath();
+        if (imagePath != null) {
+            try {
                 Path imageFilePath = Paths.get(UPLOAD_DIR, imagePath);
-                try {
-                    Files.deleteIfExists(imageFilePath);
-                    book.setImagePath(null);
-                    update(book.getId(), book);
-                } catch (IOException e) {
-                    System.err.println("Error deleting image file: " + e.getMessage()); // Error logging
-                    e.printStackTrace();
-                }
+                Files.deleteIfExists(imageFilePath);
+                book.setImagePath(null);
+                update(book.getId(), book);
+            } catch (IOException e) {
+                handleImageError(e);
             }
         }
+    }
+
+    // Метод для генерации уникального имени файла изображения
+    private String generateUniqueFileName(MultipartFile imageFile) {
+        return UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
     }
 }
-

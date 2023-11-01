@@ -71,6 +71,7 @@ public class PeopleController {
     // Метод для обработки создания нового пользователя.
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         // Проверка наличия ошибок валидации
         if (bindingResult.hasErrors()) {
             return "people/new"; // Если есть ошибки, возвращаем форму создания с сообщениями об ошибках.
@@ -121,10 +122,6 @@ public class PeopleController {
         // Перенаправление пользователя на список всех пользователей
         return "redirect:/people";
     }
-
-    // Метод для отображения личного кабинета пользователя.
-
-
 }
 
 

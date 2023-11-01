@@ -130,7 +130,7 @@ public class BookController {
             return "books/edit"; // Если есть ошибки, возвращаем форму редактирования с сообщениями об ошибках.
         }
 
-        // New image file provided, save it
+        // Предоставлен новый файл изображения, сохраните его
         bookService.imgLoad(book, imageFile);
 
         model.addAttribute("deleteImage", deleteImage);

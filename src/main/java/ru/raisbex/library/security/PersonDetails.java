@@ -17,36 +17,44 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Возвращает список ролей (GrantedAuthority), к которым принадлежит пользователь.
         return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
     }
+
     @Override
     public String getPassword() {
+        // Возвращает пароль пользователя.
         return this.person.getPassword();
     }
 
     @Override
     public String getUsername() {
+        // Возвращает имя пользователя (в данном случае, ФИО).
         return this.person.getFIO();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        // Проверяет, истек ли срок действия учетной записи пользователя.
+        return true; // Всегда возвращает true, предполагая, что срок действия учетной записи не истек.
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        // Проверяет, заблокирована ли учетная запись пользователя.
+        return true; // Всегда возвращает true, предполагая, что учетная запись не заблокирована.
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        // Проверяет, истек ли срок действия учетных данных пользователя.
+        return true; // Всегда возвращает true, предполагая, что учетные данные не истекли.
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        // Проверяет, включена ли учетная запись пользователя.
+        return true; // Всегда возвращает true, предполагая, что учетная запись включена.
     }
 
     // Нужно, чтобы получать данные аутентифицированного пользователя
@@ -54,3 +62,4 @@ public class PersonDetails implements UserDetails {
         return this.person;
     }
 }
+

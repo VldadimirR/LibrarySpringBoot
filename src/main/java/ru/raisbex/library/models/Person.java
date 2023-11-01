@@ -4,9 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "person")
@@ -17,7 +17,7 @@ public class Person {
     private int id; // Уникальный идентификатор пользователя.
 
     @NotEmpty(message = "Имя не должно быть пустым")
-    @Size(min = 2, max = 30, message = "Имя должно содержать от 2 до 30 символов")
+    @Size(min = 2, max = 50, message = "Имя должно содержать от 2 до 30 символов")
     @Column(name = "FIO")
     private String FIO; // Полное имя пользователя.
 
@@ -104,5 +104,29 @@ public class Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", FIO='" + FIO + '\'' +
+                ", age=" + age +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age && Objects.equals(FIO, person.FIO)
+                && Objects.equals(role, person.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(FIO, age, role);
     }
 }

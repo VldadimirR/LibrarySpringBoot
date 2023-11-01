@@ -3,10 +3,7 @@ package ru.raisbex.library.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
 import ru.raisbex.library.services.BookService;
@@ -19,6 +16,7 @@ import java.util.List;
 public class ProfileController {
     private final PeopleService peopleService;
     private final BookService bookService;
+
 
     @Autowired
     public ProfileController(PeopleService peopleService, BookService bookService) {
@@ -57,10 +55,12 @@ public class ProfileController {
     // Метод для обновления роли пользователя
     @PostMapping("/updateRole")
     public String updateRole(@RequestParam("userId") int userId, @RequestParam("newRole") String newRole) {
-        // Ваш код для обновления роли пользователя
+        // Код для обновления роли пользователя
         peopleService.updateUserRole(userId, newRole);
 
         // После обновления роли перенаправляем обратно на страницу профиля
         return "redirect:/profile";
     }
+
+
 }

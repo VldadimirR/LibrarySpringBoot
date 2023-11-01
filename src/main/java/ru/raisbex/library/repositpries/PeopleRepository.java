@@ -21,4 +21,6 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
     Optional<Person> findByLogin(String username);
 
     List<Person> findByRole(String role);
+
+
 }

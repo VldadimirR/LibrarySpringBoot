@@ -19,11 +19,10 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // Метод для регистрации нового пользователя в базе данных.
     @Transactional
     public void register(Person person) {
-        person.setPassword(passwordEncoder.encode(person.getPassword()));
-        person.setRole("ROLE_USER");
-        peopleRepository.save(person);
+        save(person);
     }
 
     @Transactional

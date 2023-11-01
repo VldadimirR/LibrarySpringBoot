@@ -37,7 +37,7 @@
                     th:method="POST"
                     class="logout-button"
             >
-              <input type="submit" value="Logout" />
+              <input type="submit" value="Выйти" />
             </form>
           </div>
         </div>
@@ -54,11 +54,6 @@
           class="book-form"
           enctype="multipart/form-data"
   >
-    <div class="form-group">
-      <label for="deleteImage">Удалить изображение</label>
-      <input type="checkbox" id="deleteImage" name="deleteImage" th:checked="${deleteImage}" th:disabled="${book.imagePath == null}" />
-    </div>
-
     <div class="form-group">
       <div class="form-group-img">
         <label for="imageFile">Загрузить изображение</label>
@@ -113,6 +108,10 @@
       >
         Year Error
       </div>
+    </div>
+    <div class="form-group-del">
+      <label for="deleteImage">Удалить изображение</label>
+      <input type="checkbox" id="deleteImage" name="deleteImage" th:checked="${deleteImage}" th:disabled="${book.imagePath == null}" />
     </div>
 
     <div class="button-container">
