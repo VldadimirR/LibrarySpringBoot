@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.raisbex.library.models.Person;
-import ru.raisbex.library.repositpries.PeopleRepository;
+import ru.raisbex.library.repositories.PeopleRepository;
 
 @Service
 public class RegistrationService {

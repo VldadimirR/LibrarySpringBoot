@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.raisbex.library.models.Book;
 import ru.raisbex.library.models.Person;
-import ru.raisbex.library.repositpries.BookRepository;
+import ru.raisbex.library.repositories.BookRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;

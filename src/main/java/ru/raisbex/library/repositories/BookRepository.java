@@ -1,4 +1,4 @@
-package ru.raisbex.library.repositpries;
+package ru.raisbex.library.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
